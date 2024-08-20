@@ -1,9 +1,16 @@
-import { IsString, IsNotEmpty, IsArray, ArrayMinSize } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsArray,
+  ArrayMinSize,
+  IsNumber,
+} from 'class-validator';
+import { Document } from 'mongoose';
 
-export class CreateCourseDto {
+export class CreateCourseDto extends Document {
   @IsString()
   @IsNotEmpty()
-  readonly categorie: string;
+  readonly name: string;
 
   @IsString()
   @IsNotEmpty()
@@ -11,4 +18,21 @@ export class CreateCourseDto {
 
   @IsArray()
   @ArrayMinSize(1)
-  events: Array<any>;}
+  weekDays: Array<any>;
+
+  @IsNumber()
+  @IsNotEmpty()
+  duration: number;
+
+  @IsString()
+  @IsNotEmpty()
+  startClass: string;
+
+  @IsString()
+  @IsNotEmpty()
+  endClass: string;
+
+  @IsArray()
+  @ArrayMinSize(1)
+  students: Array<any>;
+}

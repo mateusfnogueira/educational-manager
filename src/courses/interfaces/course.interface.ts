@@ -5,5 +5,5 @@ export interface Course {
   duration: number;
   startClass: string;
   endClass: string;
-  students: string[];
+  students?: string[];
 }

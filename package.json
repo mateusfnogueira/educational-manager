@@ -21,10 +21,12 @@
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mongoose": "^10.0.10",
     "@nestjs/platform-express": "^9.0.0",
     "class-validator": "^0.14.1",
+    "moment-timezone": "^0.5.45",
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.3",
     "reflect-metadata": "^0.1.13",

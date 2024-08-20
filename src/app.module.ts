@@ -1,19 +1,26 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CoursesModule } from './courses/courses.module';
+import { ConfigModule } from '@nestjs/config'; // Add this line
 
-
-const DB_URL = process.env.MONGODB_URL;
-const DB_PASSWORD = process.env.MONGODB_PASSWORD;
-
+const DB_URL =
+  'mongodb+srv://mateusfranco:<password>@clusterapijogadores.bjly0gm.mongodb.net/?retryWrites=true&w=majority&appName=ClusterApiJogadores';
+const DB_PASSWORD = 'vsfni013';
+console.log(process.env.DB_URL);
 @Module({
   imports: [
-    MongooseModule.forRoot(DB_URL.replace('<password>', DB_PASSWORD)),
+    ConfigModule.forRoot({
+      envFilePath: ['.env'],
+      isGlobal: true,
+      cache: true,
+    }),
     CoursesModule,
+    MongooseModule.forRoot(DB_URL, {
+      user: 'mateusfranco',
+      pass: DB_PASSWORD,
+    }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
