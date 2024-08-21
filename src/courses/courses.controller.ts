@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
-import { Course } from './interfaces/course.interface';
+import { ICourse } from './interfaces';
 
 @Controller('courses')
 export class CoursesController {
@@ -11,7 +11,7 @@ export class CoursesController {
   async findCourses(
     @Query('id') _id: string,
     @Query('name') name: string,
-  ): Promise<Course[] | Course> {
+  ): Promise<ICourse[] | ICourse> {
     if (_id || name) {
       return this.coursesService.findById(_id, name);
     }
@@ -20,7 +20,7 @@ export class CoursesController {
 
   @Post('/create')
   @UsePipes(ValidationPipe)
-  async create(@Body() createCourseDto: CreateCourseDto): Promise<Course> {
+  async create(@Body() createCourseDto: CreateCourseDto): Promise<ICourse> {
     return this.coursesService.create(createCourseDto);
   }
 
