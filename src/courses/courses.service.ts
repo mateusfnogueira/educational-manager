@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 
 import { Course } from './interfaces/course.interface';
 import { CreateCourseDto } from './dto/create-course.dto';
-import e from 'express';
 
 @Injectable()
 export class CoursesService {
