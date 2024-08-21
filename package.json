@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "nest start --watch",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -25,6 +25,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/mongoose": "^10.0.10",
     "@nestjs/platform-express": "^9.0.0",
+    "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "moment-timezone": "^0.5.45",
     "mongodb": "^6.8.0",

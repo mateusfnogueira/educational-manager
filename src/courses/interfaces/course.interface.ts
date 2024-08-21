@@ -1,6 +1,7 @@
 export interface Course {
   name: string;
   description: string;
+  price: number;
   weekDays: string[];
   duration: number;
   startClass: string;

@@ -16,6 +16,10 @@ export class CreateCourseDto extends Document {
   @IsNotEmpty()
   description: string;
 
+  @IsNumber()
+  @IsNotEmpty()
+  price: number;
+
   @IsArray()
   @ArrayMinSize(1)
   weekDays: Array<any>;
