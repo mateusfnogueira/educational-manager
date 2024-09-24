@@ -83,6 +83,22 @@ export class CoursesService {
     );
   }
 
+  async addStudentToCourse(_id: string, studentId: string): Promise<ICourse> {
+    const courseShared = await this.courseModel.findOne({ _id }).exec();
+
+    if (!courseShared) {
+      throw new BadRequestException({
+        message: 'Course not found',
+        status: 400,
+        error: 'Bad Request',
+      });
+    }
+
+    courseShared.students.push(studentId);
+
+    return await this.courseModel.findOneAndUpdate({ _id }, courseShared, {});
+  }
+
   async deleteCourseById(_id: string): Promise<any> {
     const courseShared = await this.courseModel.findOne({ _id }).exec();
 

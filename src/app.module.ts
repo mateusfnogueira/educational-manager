@@ -15,11 +15,11 @@ console.log(process.env.DB_URL);
       isGlobal: true,
       cache: true,
     }),
-    CoursesModule,
     MongooseModule.forRoot(DB_URL, {
       user: 'mateusfranco',
       pass: DB_PASSWORD,
     }),
+    CoursesModule,
     StudentsModule,
   ],
   controllers: [],
