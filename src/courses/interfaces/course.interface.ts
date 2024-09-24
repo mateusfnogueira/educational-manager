@@ -1,3 +1,8 @@
+
+export interface IRefStudent {
+  _id: string;
+  name: string;
+}
 export interface ICourse {
   _id: string;
   name: string;
@@ -7,7 +12,7 @@ export interface ICourse {
   duration: number;
   startClass: string;
   endClass: string;
-  students?: string[];
+  students?: IRefStudent[];
 }
 
 export interface IAddedCourse {

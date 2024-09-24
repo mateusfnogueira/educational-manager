@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { ICourse } from './interfaces';
+import { ICourse, IRefStudent } from './interfaces';
 import { CreateCourseDto } from './dto/create-course.dto';
 
 @Injectable()
@@ -83,7 +83,10 @@ export class CoursesService {
     );
   }
 
-  async addStudentToCourse(_id: string, studentId: string): Promise<ICourse> {
+  async addStudentToCourse(
+    _id: string,
+    student: IRefStudent,
+  ): Promise<ICourse> {
     const courseShared = await this.courseModel.findOne({ _id }).exec();
 
     if (!courseShared) {
@@ -94,7 +97,7 @@ export class CoursesService {
       });
     }
 
-    courseShared.students.push(studentId);
+    courseShared.students.push(student);
 
     return await this.courseModel.findOneAndUpdate({ _id }, courseShared, {});
   }

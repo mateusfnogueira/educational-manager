@@ -115,7 +115,10 @@ export class StudentsService {
     student.courses.push(courseToAdd);
     await student.save();
     this.logger.log(`Course added to student: ${JSON.stringify(student)}`);
-    await this.courseService.addStudentToCourse(courseId, studentId);
+    await this.courseService.addStudentToCourse(courseId, {
+      _id: student._id,
+      name: student.name,
+    });
     return student;
   }
 }
