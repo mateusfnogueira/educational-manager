@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CoursesModule } from './courses/courses.module';
 import { ConfigModule } from '@nestjs/config'; // Add this line
+import { StudentsModule } from './students/students.module';
 
 const DB_URL =
   'mongodb+srv://mateusfranco:<password>@clusterapijogadores.bjly0gm.mongodb.net/?retryWrites=true&w=majority&appName=ClusterApiJogadores';
@@ -14,11 +15,12 @@ console.log(process.env.DB_URL);
       isGlobal: true,
       cache: true,
     }),
-    CoursesModule,
     MongooseModule.forRoot(DB_URL, {
       user: 'mateusfranco',
       pass: DB_PASSWORD,
     }),
+    CoursesModule,
+    StudentsModule,
   ],
   controllers: [],
   providers: [],

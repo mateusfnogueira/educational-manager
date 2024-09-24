@@ -2,17 +2,17 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { Course } from './interfaces/course.interface';
+import { ICourse } from './interfaces';
 import { CreateCourseDto } from './dto/create-course.dto';
 
 @Injectable()
 export class CoursesService {
   private readonly logger = new Logger(CoursesService.name);
   constructor(
-    @InjectModel('Course') private readonly courseModel: Model<Course>,
+    @InjectModel('Course') private readonly courseModel: Model<ICourse>,
   ) {}
 
-  async create(createCourseDto: CreateCourseDto): Promise<Course> {
+  async create(createCourseDto: CreateCourseDto): Promise<ICourse> {
     const { name } = createCourseDto;
     const courseShared = await this.courseModel.findOne({ name }).exec();
 
@@ -30,7 +30,7 @@ export class CoursesService {
     return await createdCourse.save();
   }
 
-  async findAll(): Promise<Course[]> {
+  async findAll(): Promise<ICourse[]> {
     const courses = await this.courseModel.find().exec();
     if (!courses.length) {
       throw new BadRequestException({
@@ -42,7 +42,7 @@ export class CoursesService {
     return courses;
   }
 
-  async findById(_id: string, name: string): Promise<Course> {
+  async findById(_id: string, name: string): Promise<ICourse> {
     if (!_id && !name) {
       throw new BadRequestException({
         message: 'Id or name is required',
@@ -51,7 +51,7 @@ export class CoursesService {
       });
     }
 
-    let courseShared: Course;
+    let courseShared: ICourse;
 
     if (_id) {
       courseShared = await this.courseModel.findById(_id).exec();
@@ -73,7 +73,7 @@ export class CoursesService {
   async updateCourseById(
     _id: string,
     createCourseDto: CreateCourseDto,
-  ): Promise<Course> {
+  ): Promise<ICourse> {
     const courseShared = await this.courseModel;
     this.logger.log(`courseShared: ${JSON.stringify(courseShared)}`);
     return await this.courseModel.findOneAndUpdate(
@@ -81,6 +81,22 @@ export class CoursesService {
       createCourseDto,
       {},
     );
+  }
+
+  async addStudentToCourse(_id: string, studentId: string): Promise<ICourse> {
+    const courseShared = await this.courseModel.findOne({ _id }).exec();
+
+    if (!courseShared) {
+      throw new BadRequestException({
+        message: 'Course not found',
+        status: 400,
+        error: 'Bad Request',
+      });
+    }
+
+    courseShared.students.push(studentId);
+
+    return await this.courseModel.findOneAndUpdate({ _id }, courseShared, {});
   }
 
   async deleteCourseById(_id: string): Promise<any> {
