@@ -113,12 +113,21 @@ export class StudentsService {
     };
 
     student.courses.push(courseToAdd);
+
+    const monthlyFee = student.courses.reduce(
+      (sum, course) => sum + course.price,
+      0,
+    );
+
+    student.monthlyFee = monthlyFee;
     await student.save();
+
     this.logger.log(`Course added to student: ${JSON.stringify(student)}`);
     await this.courseService.addStudentToCourse(courseId, {
       _id: student._id,
       name: student.name,
     });
+
     return student;
   }
 }

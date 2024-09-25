@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CoursesModule } from './courses/courses.module';
-import { ConfigModule } from '@nestjs/config'; // Add this line
+import { ConfigModule } from '@nestjs/config';
 import { StudentsModule } from './students/students.module';
 
 const DB_URL =
